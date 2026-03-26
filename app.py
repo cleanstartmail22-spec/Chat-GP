@@ -158,11 +158,13 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
 
 
 def main() -> None:
-    host = os.getenv("HOST", "127.0.0.1")
+    host = os.getenv("HOST", "0.0.0.0")
     port = int(os.getenv("PORT", "5000"))
 
     with ThreadedTCPServer((host, port), PDFToExcelHandler) as httpd:
-        print(f"Server running at http://{host}:{port}")
+        print(f"Server running on {host}:{port}")
+        if host == "0.0.0.0":
+            print(f"Open locally: http://127.0.0.1:{port}")
         httpd.serve_forever()
 
 
