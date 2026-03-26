@@ -1,16 +1,9 @@
 # PDF Document Extraction to Excel Tool
 
-This project now supports both:
+This project supports both:
 
-- **Browser app** (upload PDF in a web page, download `.xlsx`)
-- **CLI script** (`python pdf_to_excel.py input.pdf output.xlsx`)
-
-## Features
-
-- Extracts detected tables from PDF pages into separate Excel sheets.
-- Adds an `Extracted_Text` sheet with page text lines.
-- Adds a `No_Data` sheet if nothing is extracted.
-- Auto-sizes column widths for readability.
+- **Browser app** via a built-in Python web server (`app.py`)
+- **CLI script** (`pdf_to_excel.py`)
 
 ## Setup
 
@@ -20,13 +13,21 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Run in Browser (recommended)
+## Run in Browser
 
 ```bash
 python app.py
 ```
 
-Then open `http://127.0.0.1:5000` in your browser, upload a PDF, and download the converted Excel file.
+Open `http://127.0.0.1:5000`.
+
+If port 5000 is busy:
+
+```bash
+PORT=8000 python app.py
+```
+
+Then open `http://127.0.0.1:8000`.
 
 ## CLI usage
 
@@ -34,13 +35,8 @@ Then open `http://127.0.0.1:5000` in your browser, upload a PDF, and download th
 python pdf_to_excel.py <input.pdf> <output.xlsx>
 ```
 
-Example:
-
-```bash
-python pdf_to_excel.py invoice.pdf extracted.xlsx
-```
-
 ## Notes
 
-- Table extraction quality depends on the PDF structure.
-- Scanned/image-only PDFs usually require OCR before extraction.
+- The browser tool itself runs on Python stdlib (no Flask required).
+- PDF extraction still requires `pdfplumber` and `openpyxl`.
+- Scanned/image-only PDFs usually require OCR first.
